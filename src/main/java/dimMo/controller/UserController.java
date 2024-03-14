@@ -2,6 +2,7 @@ package dimMo.controller;
 
 import dimMo.model.User;
 import dimMo.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +55,7 @@ public class UserController {
         try {
             userService.updateUser(user.getId(), user);
         } catch (Exception e) {
-            System.out.println("No this user!");
+            throw new EntityNotFoundException("No this ID!");
         }
         return "redirect:/";
     }
@@ -70,7 +71,7 @@ public class UserController {
         try {
             userService.deleteUser(user.getId());
         } catch (Exception e) {
-            System.out.println("No this user!");
+            throw new EntityNotFoundException("No this ID!");
         }
 
         return "redirect:/";

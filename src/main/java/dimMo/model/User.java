@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "users")
@@ -15,9 +17,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "name")
+    @NotEmpty
     private String name;
+
     @Column(name = "surname")
+    @NotEmpty
     private String surname;
 
     public User() {
