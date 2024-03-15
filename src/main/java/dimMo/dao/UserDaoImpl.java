@@ -3,6 +3,7 @@ package dimMo.dao;
 
 import dimMo.model.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -26,18 +27,30 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(int userId) {
-        entityManager.remove(entityManager.find(User.class, userId));
+        if (entityManager.find(User.class, userId) == null) {
+            throw new EntityNotFoundException("No this user!");
+        } else {
+            entityManager.remove(entityManager.find(User.class, userId));
+        }
     }
 
     @Override
-    public void updateUser(int id, User userUpdate) {
-        User user = getUser(id);
-        user.setName(userUpdate.getName());
-        user.setSurname(userUpdate.getSurname());
+    public void updateUser(int userId, User userUpdate) {
+        if (entityManager.find(User.class, userId) == null) {
+            throw new EntityNotFoundException("No this user!");
+        } else {
+            User user = getUser(userId);
+            user.setName(userUpdate.getName());
+            user.setSurname(userUpdate.getSurname());
+        }
     }
 
     @Override
     public User getUser(int userId) {
-        return entityManager.find(User.class, userId);
+        if (entityManager.find(User.class, userId) == null) {
+            throw new EntityNotFoundException();
+        } else {
+            return entityManager.find(User.class, userId);
+        }
     }
 }
