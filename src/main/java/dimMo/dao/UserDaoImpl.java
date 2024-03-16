@@ -27,16 +27,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(int userId) {
-        if (entityManager.find(User.class, userId) == null) {
+        User ent1 = entityManager.find(User.class, userId);
+        if (ent1 == null) {
             throw new EntityNotFoundException("No this user!");
         } else {
-            entityManager.remove(entityManager.find(User.class, userId));
+            entityManager.remove(ent1);
         }
     }
 
     @Override
     public void updateUser(int userId, User userUpdate) {
-        if (entityManager.find(User.class, userId) == null) {
+        User ent1 = entityManager.find(User.class, userId);
+        if (ent1 == null) {
             throw new EntityNotFoundException("No this user!");
         } else {
             User user = getUser(userId);
@@ -47,10 +49,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUser(int userId) {
-        if (entityManager.find(User.class, userId) == null) {
+        User ent1 = entityManager.find(User.class, userId);
+        if (ent1 == null) {
             throw new EntityNotFoundException();
         } else {
-            return entityManager.find(User.class, userId);
+            return ent1;
         }
     }
 }
